@@ -1,0 +1,11 @@
+node_modules/
+out/
+.env
+.env.*
+!.env.example
+# Generated audio is cached locally; commit only if you want it shared.
+public/audio/**/*.mp3
+public/audio/**/*.wav
+public/plates/**/*.mp4
+public/plates/**/*.mov
+.cache/

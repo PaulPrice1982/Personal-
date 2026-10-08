@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Detent Recover — Coming Soon</title>
+<meta name="description" content="Detent Recover finds the revenue leaking from inside your existing customer base, and gives your teams the workflows to recover it.">
+<style>
+  @font-face { font-family: "Detent Sans"; src: url("../public/brand/fonts/inter-tight-latin-300-normal.woff2") format("woff2"); font-weight: 300; }
+  @font-face { font-family: "Detent Sans"; src: url("../public/brand/fonts/inter-tight-latin-400-normal.woff2") format("woff2"); font-weight: 400; }
+  @font-face { font-family: "Detent Sans"; src: url("../public/brand/fonts/inter-tight-latin-600-normal.woff2") format("woff2"); font-weight: 600; }
+  @font-face { font-family: "Detent Mono"; src: url("../public/brand/fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2"); font-weight: 400; }
+  :root {
+    --ink: #050607; --panel: #0c0f12; --line: #22282e; --paper: #e9ecef; --muted: #8b939c;
+    --leak: #d9a441; --accent: #6fc3e8; --error: #f08a7e;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ink); color: var(--paper); font: 400 17px/1.55 "Detent Sans", system-ui, sans-serif; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 16px; }
+  header { padding: 28px 0; font-weight: 600; letter-spacing: .3em; font-size: 14px; }
+  header span { font-weight: 300; }
+  .hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 56px; padding: 40px 0 80px; align-items: start; }
+  @media (max-width: 860px) { .hero { grid-template-columns: 1fr; gap: 32px; } }
+  .eyebrow { font: 400 12px "Detent Mono", ui-monospace, monospace; letter-spacing: .32em; color: var(--accent); }
+  h1 { font-weight: 300; font-size: clamp(32px, 5vw, 52px); line-height: 1.1; letter-spacing: -.01em; margin: 16px 0 20px; }
+  .lede { color: #c2c8ce; max-width: 34em; }
+  video, .poster { width: 100%; aspect-ratio: 16/9; background: #000; border: 1px solid var(--line); margin-top: 28px; display: block; }
+  .leaks { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .leaks span { font: 400 11px "Detent Mono", monospace; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line); padding: 6px 10px; }
+  form { background: var(--panel); border: 1px solid var(--line); padding: 28px; }
+  form h2 { font-weight: 400; font-size: 20px; margin: 0 0 4px; }
+  form p.sub { color: var(--muted); margin: 0 0 22px; font-size: 15px; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 480px) { .row { grid-template-columns: 1fr; } }
+  label { display: block; font-size: 13px; color: #c2c8ce; margin: 12px 0 6px; }
+  label .opt { color: var(--muted); }
+  input, select { width: 100%; padding: 12px; background: var(--ink); color: var(--paper); border: 1px solid #333b42; border-radius: 2px; font: inherit; font-size: 16px; }
+  input:focus, select:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: transparent; }
+  .consent { display: flex; gap: 10px; align-items: flex-start; margin-top: 18px; font-size: 13px; color: var(--muted); }
+  .consent input { width: auto; margin-top: 3px; }
+  .consent a { color: var(--paper); }
+  button { margin-top: 22px; width: 100%; padding: 15px; background: var(--paper); color: var(--ink); border: 0; font: 600 14px "Detent Sans", sans-serif; letter-spacing: .2em; cursor: pointer; }
+  button:hover { background: #fff; }
+  button:disabled { opacity: .6; cursor: progress; }
+  .msg { margin-top: 14px; font-size: 14px; min-height: 1.4em; }
+  .msg.error { color: var(--error); }
+  .thanks { display: none; }
+  .thanks h2 { font-weight: 300; font-size: 26px; }
+  footer { border-top: 1px solid var(--line); padding: 24px 0 40px; color: var(--muted); font-size: 13px; }
+</style>
+</head>
+<body>
+<header class="wrap">DETENT <span>RECOVER</span></header>
+
+<main class="wrap hero">
+  <section>
+    <div class="eyebrow">COMING SOON</div>
+    <h1>How much revenue is your customer base leaking?</h1>
+    <p class="lede">Your customers add users, entities, sites, storage and consumption faster than contracts and billing keep up. Detent Recover finds that leakage, quantifies it, and gives your teams the workflows to recover it, with the customer relationship intact.</p>
+    <!-- Set TEASER_SRC in CONFIG below to show the film here. -->
+    <div class="poster" id="videoSlot" aria-hidden="true"></div>
+    <div class="leaks" aria-label="Examples of leakage Detent Recover identifies">
+      <span>Additional Users</span><span>Additional Companies</span><span>Non-Group Entities</span>
+      <span>Mergers &amp; Acquisitions</span><span>Additional Storage</span><span>Additional Sites</span>
+      <span>Missed Billing</span><span>Contract Equity</span>
+    </div>
+  </section>
+
+  <section>
+    <form id="register" novalidate>
+      <h2>Register your interest</h2>
+      <p class="sub">Be first to see Detent Recover, and get an early read on where your leakage is likely to sit.</p>
+      <div class="row">
+        <div><label for="firstname">First name</label><input id="firstname" name="firstname" autocomplete="given-name" required></div>
+        <div><label for="lastname">Last name</label><input id="lastname" name="lastname" autocomplete="family-name" required></div>
+      </div>
+      <label for="email">Work email</label><input id="email" name="email" type="email" autocomplete="email" required>
+      <div class="row">
+        <div><label for="company">Company</label><input id="company" name="company" autocomplete="organization" required></div>
+        <div><label for="jobtitle">Job title</label><input id="jobtitle" name="jobtitle" autocomplete="organization-title" required></div>
+      </div>
+      <div class="row">
+        <div>
+          <label for="annual_revenue">Annual revenue <span class="opt">(optional)</span></label>
+          <select id="annual_revenue" name="annual_revenue">
+            <option value="">Select</option><option>Under £10m</option><option>£10m–£50m</option><option>£50m–£250m</option><option>£250m–£1bn</option><option>Over £1bn</option>
+          </select>
+        </div>
+        <div>
+          <label for="customer_count">Number of customers <span class="opt">(optional)</span></label>
+          <select id="customer_count" name="customer_count">
+            <option value="">Select</option><option>Under 100</option><option>100–1,000</option><option>1,000–10,000</option><option>Over 10,000</option>
+          </select>
+        </div>
+      </div>
+      <div class="consent">
+        <input type="checkbox" id="consent" name="consent" required>
+        <label for="consent" style="margin:0">I agree to Detent contacting me about Detent Recover. See our <a id="privacyLink" href="#">privacy notice</a>.</label>
+      </div>
+      <button type="submit" id="submitBtn">REGISTER YOUR INTEREST →</button>
+      <div class="msg" id="msg" role="status" aria-live="polite"></div>
+    </form>
+    <div class="thanks" id="thanks" role="status" aria-live="polite">
+      <div class="eyebrow">REGISTERED</div>
+      <h2>Thank you. We'll be in touch before launch.</h2>
+      <p class="lede">In the meantime: which of your customers have grown the most since their contract was signed?</p>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap" id="footer"></footer>
+
+<script>
+  // ---- CONFIG: placeholders only. Nothing here is a real endpoint until you set it. ----
+  const CONFIG = {
+    // 'hubspot' posts to the public HubSpot Forms API (no secret needed). 'json' POSTs to your own endpoint.
+    mode: 'hubspot',
+    hubspot: { portalId: '{{HUBSPOT_PORTAL_ID}}', formGuid: '{{HUBSPOT_FORM_GUID}}' },
+    jsonEndpoint: '{{REGISTRATION_FORM_ENDPOINT}}',
+    privacyUrl: '{{PRIVACY_NOTICE_URL}}',
+    legalFooter: '{{LEGAL_FOOTER}}',
+    teaserSrc: '', // e.g. 'teaser-16x9.mp4'
+    blockFreeEmail: true,
+  };
+
+  const isSet = (v) => v && !/^\{\{.*\}\}$/.test(v);
+  const $ = (id) => document.getElementById(id);
+  if (isSet(CONFIG.privacyUrl)) $('privacyLink').href = CONFIG.privacyUrl;
+  if (isSet(CONFIG.legalFooter)) $('footer').textContent = CONFIG.legalFooter;
+  if (CONFIG.teaserSrc) {
+    const v = document.createElement('video');
+    Object.assign(v, { src: CONFIG.teaserSrc, controls: true, playsInline: true, preload: 'metadata' });
+    $('videoSlot').replaceWith(v);
+  }
+
+  // Keep campaign attribution with the lead.
+  const params = new URLSearchParams(location.search);
+  const utm = Object.fromEntries(['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
+    .filter((k) => params.get(k)).map((k) => [k, params.get(k)]));
+
+  const FREE = /@(gmail|googlemail|yahoo|hotmail|outlook|live|icloud|me|aol|proton|protonmail)\./i;
+
+  $('register').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = e.currentTarget, msg = $('msg');
+    msg.className = 'msg'; msg.textContent = '';
+    const data = Object.fromEntries(new FormData(form));
+    const missing = [...form.querySelectorAll('[required]')].filter((el) => el.type === 'checkbox' ? !el.checked : !el.value.trim());
+    if (missing.length) { msg.className = 'msg error'; msg.textContent = 'Please complete the highlighted fields.'; missing[0].focus(); missing.forEach((el) => el.setAttribute('aria-invalid', 'true')); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) { msg.className = 'msg error'; msg.textContent = 'Please enter a valid email address.'; $('email').focus(); return; }
+    if (CONFIG.blockFreeEmail && FREE.test(data.email)) { msg.className = 'msg error'; msg.textContent = 'Please use your work email address.'; $('email').focus(); return; }
+
+    $('submitBtn').disabled = true;
+    try {
+      let res;
+      if (CONFIG.mode === 'hubspot') {
+        if (!isSet(CONFIG.hubspot.portalId) || !isSet(CONFIG.hubspot.formGuid)) throw new Error('not-configured');
+        const fields = Object.entries({ ...data, ...utm }).filter(([k, v]) => k !== 'consent' && v).map(([name, value]) => ({ name, value }));
+        res = await fetch(`https://api.hsforms.com/submissions/v3/integration/submit/${CONFIG.hubspot.portalId}/${CONFIG.hubspot.formGuid}`, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            fields, context: { pageUri: location.href, pageName: document.title },
+            legalConsentOptions: { consent: { consentToProcess: true, text: 'I agree to Detent contacting me about Detent Recover.' } },
+          }),
+        });
+      } else {
+        if (!isSet(CONFIG.jsonEndpoint)) throw new Error('not-configured');
+        res = await fetch(CONFIG.jsonEndpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...data, ...utm, source: 'detent-recover-teaser' }) });
+      }
+      if (!res.ok) throw new Error(String(res.status));
+      form.style.display = 'none'; $('thanks').style.display = 'block';
+    } catch (err) {
+      msg.className = 'msg error';
+      msg.textContent = err.message === 'not-configured'
+        ? 'Registration is not live yet: the form endpoint has not been configured.'
+        : 'Something went wrong. Please try again in a moment.';
+    } finally {
+      $('submitBtn').disabled = false;
+    }
+  });
+</script>
+</body>
+</html>

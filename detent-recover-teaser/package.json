@@ -1,0 +1,41 @@
+{
+  "name": "detent-recover-teaser",
+  "version": "1.0.0",
+  "description": "Detent Recover — The Leaky Bucket teaser film pipeline",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "scan": "tsx scripts/scan-assets.ts",
+    "qc": "tsx scripts/qc.ts",
+    "docs": "tsx scripts/build-docs.ts",
+    "vo": "tsx scripts/elevenlabs/generate-vo.ts",
+    "vo:audition": "tsx scripts/elevenlabs/audition-voices.ts",
+    "music": "tsx scripts/elevenlabs/generate-music.ts",
+    "sfx": "tsx scripts/elevenlabs/generate-sfx.ts",
+    "audio": "npm run vo && npm run music && npm run sfx && npm run scan",
+    "render:preview": "npm run scan && npm run qc && remotion render src/index.ts Teaser-16x9 out/teaser-16x9-1080p.mp4 --scale=0.5",
+    "render:16x9": "npm run scan && npm run qc && remotion render src/index.ts Teaser-16x9 out/teaser-16x9-4k.mp4 && scripts/master-audio.sh out/teaser-16x9-4k.mp4",
+    "render:16x9-captioned": "remotion render src/index.ts Teaser-16x9-Captioned out/teaser-16x9-captioned-4k.mp4 && scripts/master-audio.sh out/teaser-16x9-captioned-4k.mp4",
+    "render:1x1": "remotion render src/index.ts Teaser-1x1 out/teaser-1x1.mp4 --scale=0.5 && scripts/master-audio.sh out/teaser-1x1.mp4",
+    "render:9x16": "remotion render src/index.ts Teaser-9x16 out/teaser-9x16.mp4 --scale=0.5 && scripts/master-audio.sh out/teaser-9x16.mp4",
+    "typecheck": "tsc -p ."
+  },
+  "dependencies": {
+    "@elevenlabs/elevenlabs-js": "^2.71.0",
+    "@remotion/cli": "^4.0.534",
+    "@remotion/fonts": "^4.0.534",
+    "dotenv": "^18.0.6",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "^4.0.534"
+  },
+  "devDependencies": {
+    "@fontsource/ibm-plex-mono": "^5.3.0",
+    "@fontsource/inter-tight": "^5.3.0",
+    "@types/node": "^26.6.4",
+    "@types/react": "^18.3.31",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  },
+  "private": true,
+  "type": "module"
+}
