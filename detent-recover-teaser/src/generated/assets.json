@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-08T08:56:38.131Z",
+  "generatedAt": "2026-10-08T14:23:56.159Z",
   "plates": {
     "S01": "plates/S01.mp4",
     "S02": "plates/S02.mp4",
@@ -33,7 +33,7 @@
     },
     "VO_03B_HIDDEN": {
       "file": "audio/vo/VO_03B_HIDDEN.mp3",
-      "duration": 3.108571
+      "duration": 3.343673
     },
     "VO_04_RECOVER": {
       "file": "audio/vo/VO_04_RECOVER.mp3",
@@ -45,7 +45,7 @@
     },
     "VO_05B_LINE": {
       "file": "audio/vo/VO_05B_LINE.mp3",
-      "duration": 3.108571
+      "duration": 2.115918
     },
     "VO_05C_CTA": {
       "file": "audio/vo/VO_05C_CTA.mp3",
