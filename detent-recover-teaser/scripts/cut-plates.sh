@@ -30,6 +30,8 @@ S11  C07_seal         0.0   3.0   3.0
 S12  C07_seal         3.0   5.8   2.8
 S13  C07_seal         5.8   8.0   2.4
 S14  C08_sealed       0.0   1.8   1.8
-S15  C09_money        0.4   3.9   3.5
+S15  C09_money_gold   1.0   4.5   3.5
 S16  C10_retained     1.8   3.3   1.5
 TABLE
+# Band shots were generated with a cyan accent; recolour to brand gold after cutting.
+python3 scripts/regrade-accent.py S11 S12 S13 S14 S16
