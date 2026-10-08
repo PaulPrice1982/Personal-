@@ -5,6 +5,7 @@ import type { Shot } from './config/types';
 import { Plate } from './components/Plate';
 import { LeakLabels } from './components/LeakLabels';
 import { Supers } from './components/Supers';
+import { Ledger } from './components/Ledger';
 import { Captions } from './components/Captions';
 import { EndCard } from './components/EndCard';
 import { Grade } from './components/Grade';
@@ -25,7 +26,7 @@ const ShotLayer: React.FC<{ shot: Shot }> = ({ shot }) => {
     <AbsoluteFill style={{ opacity }}>
       {shot.animatic.endCard ? <EndCard /> : <Plate shot={shot} />}
       {/* Labels are rendered relative to the shot's own clock */}
-      {!shot.animatic.endCard && <LeakLabels shot={shot} />}
+      {!shot.animatic.endCard && film.labelMode === 'anchored' && <LeakLabels shot={shot} />}
     </AbsoluteFill>
   );
 };
@@ -43,6 +44,7 @@ export const Film: React.FC<{ captionsOverride?: boolean; withAudio?: boolean }>
       );
     })}
     <Grade />
+    {film.labelMode === 'ledger' && <Ledger />}
     <Supers />
     <Captions force={captionsOverride} />
     {withAudio && <Soundtrack />}

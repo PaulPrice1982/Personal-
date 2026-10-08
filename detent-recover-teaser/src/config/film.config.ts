@@ -97,6 +97,22 @@ export const leakCategories: LeakCategory[] = [
   { id: 'grr', label: 'GRR', tier: 'secondary', form: 'coins', showOnScreen: false },
 ];
 
+/**
+ * 'anchored' = annotations pinned to holes (needs tracks/ from a CG scene).
+ * 'ledger'   = a restrained corner readout that lists each leak as it opens and
+ *              flips it to SEALED. Used with generated plates, which can't be tracked.
+ */
+export const labelMode = 'ledger' as 'anchored' | 'ledger';
+export const ledger = {
+  title: 'LEAKAGE DETECTED',
+  secondaryPrefix: 'ALSO DETECTED',
+  layout: {
+    '16:9': { left: 0.705, top: 0.15, width: 0.24 },
+    '1:1': { left: 0.56, top: 0.3, width: 0.38 },
+    '9:16': { left: 0.1, top: 0.63, width: 0.8 },
+  } satisfies Record<AspectKey, { left: number; top: number; width: number }>,
+};
+
 /** Labels render uppercase with tracking; the source label stays exact. */
 export const labelCase: 'upper' | 'as-written' = 'upper';
 export const maxConcurrentLabels = 8;
@@ -211,7 +227,7 @@ export const shots: Shot[] = [
   },
   // SCENE 5 — DETENT RECOVER
   {
-    id: 'S11', scene: 5, start: 38.0, end: 41.0, transitionIn: 'dissolve',
+    id: 'S11', scene: 5, start: 38.0, end: 41.0, transitionIn: 'cut',
     title: 'Arrival', lens: '100mm macro', camera: 'Slow lateral glide following the band',
     action: 'Key light cools. A precision-machined band — dark anodised alloy with a hairline illuminated channel and engraved DETENT RECOVER — slides into frame and wraps the bucket.',
     plate: 'plates/S11.mp4', focal: C, visible: [], animatic: { zoom: 2.4, cx: 0.5, cy: 0.5 },
@@ -310,9 +326,9 @@ export const narration: VoSegment[] = [
     text: 'Turning hidden leakage into recoverable revenue.',
     note: 'Disabled: duplicates the end line and steps on the money shot.',
   },
-  { id: 'VO_05A_BRAND', start: 53.5, mustEndBy: 54.9, enabled: true, text: 'Detent Recover.' },
-  { id: 'VO_05B_LINE', start: 55.1, mustEndBy: 57.9, enabled: true, text: 'Stop the leak. Recover the revenue.' },
-  { id: 'VO_05C_CTA', start: 58.0, mustEndBy: 59.6, enabled: true, text: 'Register your interest.' },
+  { id: 'VO_05A_BRAND', start: 53.4, mustEndBy: 54.8, enabled: true, text: 'Detent Recover.' },
+  { id: 'VO_05B_LINE', start: 54.9, mustEndBy: 58.1, enabled: true, text: 'Stop the leak. Recover the revenue.' },
+  { id: 'VO_05C_CTA', start: 58.2, mustEndBy: 59.95, enabled: true, text: 'Register your interest.' },
 ];
 
 // -----------------------------------------------------------------------------
@@ -371,6 +387,8 @@ export const audio = {
     ] satisfies MusicSection[],
   },
   mix: {
+    /** level of the generated plates' own sound (coins, paper, room) */
+    plateAudioDb: -9,
     voDb: 0,
     musicDb: -14,
     /** extra music attenuation while narration plays */
@@ -427,6 +445,6 @@ export const sfxCues: SfxCue[] = [
 export const film = {
   title: 'Detent Recover — The Leaky Bucket',
   output, brand, leakCategories, holes, shots, supers, endCard, narration, captions, audio,
-  sfxLibrary, sfxCues, sfxProcedural, finalSealAt, maxConcurrentLabels, labelCase,
+  sfxLibrary, sfxCues, sfxProcedural, finalSealAt, maxConcurrentLabels, labelCase, labelMode, ledger,
 };
 export default film;

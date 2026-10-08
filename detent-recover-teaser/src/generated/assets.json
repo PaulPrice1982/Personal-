@@ -1,9 +1,75 @@
 {
-  "generatedAt": "2026-10-08T06:48:11.733Z",
-  "plates": {},
-  "vo": {},
-  "music": null,
-  "sfx": {},
+  "generatedAt": "2026-10-08T08:12:17.425Z",
+  "plates": {
+    "S01": "plates/S01.mp4",
+    "S02": "plates/S02.mp4",
+    "S03": "plates/S03.mp4",
+    "S04": "plates/S04.mp4",
+    "S05": "plates/S05.mp4",
+    "S06": "plates/S06.mp4",
+    "S07": "plates/S07.mp4",
+    "S08": "plates/S08.mp4",
+    "S09": "plates/S09.mp4",
+    "S10": "plates/S10.mp4",
+    "S11": "plates/S11.mp4",
+    "S12": "plates/S12.mp4",
+    "S13": "plates/S13.mp4",
+    "S14": "plates/S14.mp4",
+    "S15": "plates/S15.mp4",
+    "S16": "plates/S16.mp4"
+  },
+  "vo": {
+    "VO_01_OPENING": {
+      "file": "audio/vo/VO_01_OPENING.mp3",
+      "duration": 1.201633
+    },
+    "VO_02_LEAKAGE": {
+      "file": "audio/vo/VO_02_LEAKAGE.mp3",
+      "duration": 6.791837
+    },
+    "VO_03_SCALE": {
+      "file": "audio/vo/VO_03_SCALE.mp3",
+      "duration": 4.545306
+    },
+    "VO_03B_HIDDEN": {
+      "file": "audio/vo/VO_03B_HIDDEN.mp3",
+      "duration": 2.507755
+    },
+    "VO_04_RECOVER": {
+      "file": "audio/vo/VO_04_RECOVER.mp3",
+      "duration": 8.228571
+    },
+    "VO_05A_BRAND": {
+      "file": "audio/vo/VO_05A_BRAND.mp3",
+      "duration": 1.097143
+    },
+    "VO_05B_LINE": {
+      "file": "audio/vo/VO_05B_LINE.mp3",
+      "duration": 3.056327
+    },
+    "VO_05C_CTA": {
+      "file": "audio/vo/VO_05C_CTA.mp3",
+      "duration": 1.671837
+    }
+  },
+  "music": {
+    "file": "audio/music/score.mp3",
+    "duration": 60.024
+  },
+  "sfx": {
+    "seal_click": {
+      "file": "audio/sfx/seal_click.mp3",
+      "duration": 2.037551
+    },
+    "final_seal": {
+      "file": "audio/sfx/final_seal.mp3",
+      "duration": 1.044898
+    },
+    "sting_shimmer": {
+      "file": "audio/sfx/sting_shimmer.mp3",
+      "duration": 1.044898
+    }
+  },
   "tracks": {},
   "brand": {}
 }
