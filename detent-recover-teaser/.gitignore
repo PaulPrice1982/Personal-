@@ -3,9 +3,6 @@ out/
 .env
 .env.*
 !.env.example
-# Generated audio is cached locally; commit only if you want it shared.
-public/audio/**/*.mp3
-public/audio/**/*.wav
-public/plates/**/*.mp4
-public/plates/**/*.mov
+# Final cut plates (public/plates) and selected audio (public/audio) ARE committed so the
+# film can be re-rendered anywhere. Raw generation outputs in out/ are not.
 .cache/

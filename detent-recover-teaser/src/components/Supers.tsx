@@ -6,7 +6,7 @@ import { colours, fonts, unit } from '../lib/theme';
 
 // Text is laid out natively per aspect (never cropped from the 16:9 master).
 const layout = {
-  '16:9': { left: 0.08, top: 0.5, align: 'left' as const, maxW: 0.32 },
+  '16:9': { left: 0.08, top: 0.2, align: 'left' as const, maxW: 0.32 },
   '1:1': { left: 0.08, top: 0.13, align: 'left' as const, maxW: 0.84 },
   '9:16': { left: 0.1, top: 0.16, align: 'left' as const, maxW: 0.8 },
 };
@@ -26,8 +26,12 @@ export const Supers: React.FC = () => {
         const rise = interpolate(t, [sp.start, sp.start + 0.8], [8, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
         const size = (sp.style === 'understated' ? 30 : 38) * u;
         return (
+          <React.Fragment key={sp.id}>
+          {/* soft scrim so supers stay legible over bright steel */}
+          <div style={{ position: 'absolute', inset: 0, opacity: o * 0.85, background: L.align === 'left' && W > H
+            ? 'linear-gradient(90deg, rgba(5,6,7,0.78) 0%, rgba(5,6,7,0.45) 30%, rgba(5,6,7,0) 52%)'
+            : 'linear-gradient(180deg, rgba(5,6,7,0.75) 0%, rgba(5,6,7,0.35) 26%, rgba(5,6,7,0) 40%)' }} />
           <div
-            key={sp.id}
             style={{
               position: 'absolute', left: W * L.left, top: H * L.top, width: W * L.maxW,
               transform: `translateY(calc(-50% + ${rise * u}px))`, opacity: o, filter: `blur(${blur * u}px)`,
@@ -38,6 +42,7 @@ export const Supers: React.FC = () => {
           >
             {sp.text}
           </div>
+          </React.Fragment>
         );
       })}
     </AbsoluteFill>
