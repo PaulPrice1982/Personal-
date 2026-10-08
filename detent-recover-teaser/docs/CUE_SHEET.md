@@ -8,16 +8,16 @@ Mix priority: narration → key SFX → music. Music ducks -9 dB under narration
 
 | ID | In | Must end by | Text |
 |---|---|---|---|
-| VO_01_OPENING | 0:02.0 | 0:04.8 | Your customers grow. |
-| VO_02_LEAKAGE | 0:07.6 | 0:15.2 | They add users, entities, locations, services and consumption. But contracts and billing don’t always keep up. |
-| VO_03_SCALE | 0:16.4 | 0:23.4 | And when what customers use no longer matches what they pay for… revenue leaks. |
-| VO_03B_HIDDEN | 0:24.4 | 0:28.0 | Often hidden inside the customers you already have. |
-| VO_04_RECOVER | 0:38.6 | 0:47.8 | Detent Recover identifies the leakage, quantifies it, and gives your teams the workflows to recover it — with the customer relationship intact. |
+| VO_01_OPENING | 0:02.0 | 0:04.8 | Your customers are growing. |
+| VO_02_LEAKAGE | 0:07.6 | 0:15.2 | More users. More entities. More sites. More consumption. But contracts and billing don’t keep up. |
+| VO_03_SCALE | 0:16.4 | 0:23.4 | So the revenue that should grow with them… leaks away. |
+| VO_03B_HIDDEN | 0:24.4 | 0:28.4 | And every pound that leaks comes straight off EBITDA. |
+| VO_04_RECOVER | 0:38.6 | 0:47.8 | Detent Recover finds that leakage, quantifies it, and gives your teams the workflows to recover it — with the customer relationship intact. |
 | VO_04_RECOVER_LONG _(disabled)_ | 0:38.6 | 0:47.8 | Detent Recover identifies that leakage, quantifies the commercial opportunity, and gives your teams the workflows and tools to recover it — commercially, consistently, and with the customer relationship in mind. |
 | VO_04B_TURNING _(disabled)_ | 0:47.0 | 0:49.6 | Turning hidden leakage into recoverable revenue. |
-| VO_05A_BRAND | 0:53.5 | 0:54.9 | Detent Recover. |
-| VO_05B_LINE | 0:55.1 | 0:57.9 | Stop the leak. Recover the revenue. |
-| VO_05C_CTA | 0:58.0 | 0:59.6 | Register your interest. |
+| VO_05A_BRAND | 0:53.4 | 0:54.8 | Detent Recover. |
+| VO_05B_LINE | 0:54.9 | 0:58.1 | Grow revenue. Protect EBITDA. |
+| VO_05C_CTA | 0:58.2 | 0:60.0 | Register your interest. |
 
 ## Music sections (ElevenLabs composition plan)
 
@@ -37,6 +37,7 @@ Mix priority: narration → key SFX → music. Music ducks -9 dB under narration
 |---|---|---|
 | 0:00.0 | room_tone (room) | -26 dB |
 | 0:00.6 | metal_resonance (reso) | -22 dB |
+| 0:02.0 | coins_inflow_bed (inflow) | -17 dB |
 | 0:03.6 | notes_flutter (flutter1) | -18 dB |
 | 0:08.0 | note_slip_through (slip1) | -12 dB |
 | 0:21.4 | note_slip_through (slip2) | -14 dB |

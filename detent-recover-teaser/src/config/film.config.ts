@@ -104,7 +104,7 @@ export const leakCategories: LeakCategory[] = [
  */
 export const labelMode = 'ledger' as 'anchored' | 'ledger';
 export const ledger = {
-  title: 'LEAKAGE DETECTED',
+  title: 'REVENUE LEAKAGE DETECTED',
   secondaryPrefix: 'ALSO DETECTED',
   layout: {
     '16:9': { left: 0.705, top: 0.15, width: 0.24 },
@@ -283,13 +283,13 @@ export const shots: Shot[] = [
 export const supers: Super[] = [
   { id: 'T1', text: 'YOUR CUSTOMERS ARE GROWING.', start: 1.6, end: 4.6, style: 'statement' },
   { id: 'T2', text: 'IS YOUR REVENUE GROWING WITH THEM?', start: 4.9, end: 7.2, style: 'question' },
-  { id: 'T3', text: 'REVENUE YOU SHOULD ALREADY BE COLLECTING.', start: 31.4, end: 34.6, style: 'understated' },
+  { id: 'T3', text: 'REVENUE YOU’VE EARNED.\nEBITDA YOU’RE LOSING.', start: 31.4, end: 34.6, style: 'understated' },
 ];
 
 export const endCard = {
   wordmarkAt: 53.4,
   lineAt: 55.0,
-  lines: ['STOP THE LEAK.', 'RECOVER THE REVENUE.'],
+  lines: ['GROW REVENUE.', 'PROTECT EBITDA.'],
   comingSoonAt: 57.0,
   comingSoon: 'COMING SOON',
   ctaAt: 58.0,
@@ -300,20 +300,20 @@ export const endCard = {
 // mustEndBy is enforced by `npm run qc` against the generated take's duration.
 // -----------------------------------------------------------------------------
 export const narration: VoSegment[] = [
-  { id: 'VO_01_OPENING', start: 2.0, mustEndBy: 4.8, enabled: true, text: 'Your customers grow.' },
+  { id: 'VO_01_OPENING', start: 2.0, mustEndBy: 4.8, enabled: true, text: 'Your customers are growing.' },
   {
     id: 'VO_02_LEAKAGE', start: 7.6, mustEndBy: 15.2, enabled: true,
-    text: 'They add users, entities, locations, services and consumption. But contracts and billing don’t always keep up.',
+    text: 'More users. More entities. More sites. More consumption. But contracts and billing don’t keep up.',
   },
   {
     id: 'VO_03_SCALE', start: 16.4, mustEndBy: 23.4, enabled: true,
-    text: 'And when what customers use no longer matches what they pay for… revenue leaks.',
+    text: 'So the revenue that should grow with them… leaks away.',
   },
-  { id: 'VO_03B_HIDDEN', start: 24.4, mustEndBy: 28.0, enabled: true, text: 'Often hidden inside the customers you already have.' },
+  { id: 'VO_03B_HIDDEN', start: 24.4, mustEndBy: 28.4, enabled: true, text: 'And every pound that leaks comes straight off EBITDA.' },
   // 28–38s is deliberately unscored by voice: the realisation needs to land in silence.
   {
     id: 'VO_04_RECOVER', start: 38.6, mustEndBy: 47.8, enabled: true,
-    text: 'Detent Recover identifies the leakage, quantifies it, and gives your teams the workflows to recover it — with the customer relationship intact.',
+    text: 'Detent Recover finds that leakage, quantifies it, and gives your teams the workflows to recover it — with the customer relationship intact.',
     note: 'Tightened from the brief to protect the money-shot silence (48–51.5s). Original kept below, disabled.',
   },
   {
@@ -327,7 +327,7 @@ export const narration: VoSegment[] = [
     note: 'Disabled: duplicates the end line and steps on the money shot.',
   },
   { id: 'VO_05A_BRAND', start: 53.4, mustEndBy: 54.8, enabled: true, text: 'Detent Recover.' },
-  { id: 'VO_05B_LINE', start: 54.9, mustEndBy: 58.1, enabled: true, text: 'Stop the leak. Recover the revenue.' },
+  { id: 'VO_05B_LINE', start: 54.9, mustEndBy: 58.1, enabled: true, text: 'Grow revenue. Protect EBITDA.' },
   { id: 'VO_05C_CTA', start: 58.2, mustEndBy: 59.95, enabled: true, text: 'Register your interest.' },
 ];
 
@@ -387,8 +387,8 @@ export const audio = {
     ] satisfies MusicSection[],
   },
   mix: {
-    /** level of the generated plates' own sound (coins, paper, room) */
-    plateAudioDb: -9,
+    /** level of the generated plates' own sound. null = muted (Veo audio can contain stray voices) */
+    plateAudioDb: null as number | null,
     voDb: 0,
     musicDb: -14,
     /** extra music attenuation while narration plays */
@@ -419,6 +419,8 @@ export const sfxLibrary: Record<string, SfxLibraryItem> = {
   seal_click: { prompt: 'Short precise mechanical lock click, machined metal, satisfying, not cartoon, tight', durationSeconds: 0.6 },
   final_seal: { prompt: 'Deep solid precision lock engaging, heavy machined metal, low thud with fine click, premium', durationSeconds: 1.5 },
   note_press_sealed: { prompt: 'Banknote pressing gently against smooth metal surface then sliding back, very subtle paper friction', durationSeconds: 2 },
+  coins_inflow_bed: { prompt: 'Steady stream of metal coins falling into a large steel bucket already full of coins and banknotes, continuous, no voices', durationSeconds: 20, loop: true },
+  coins_escape_bed: { prompt: 'Occasional single coins and small clusters dropping onto a concrete floor, ringing and rolling, no voices', durationSeconds: 20, loop: true },
   sting_shimmer: { prompt: 'Restrained elegant sonic logo shimmer, soft glassy tone with long decay, premium technology brand', durationSeconds: 4 },
 };
 
@@ -435,6 +437,7 @@ export const sfxCues: SfxCue[] = [
   { id: 'flutter1', file: 'notes_flutter', at: 3.6, gainDb: -18 },
   { id: 'slip1', file: 'note_slip_through', at: 8.0, gainDb: -12 },
   { id: 'slip2', file: 'note_slip_through', at: 21.4, gainDb: -14 },
+  { id: 'inflow', file: 'coins_inflow_bed', at: 2.0, gainDb: -17, loop: true, duration: 50 },
   { id: 'arrival', file: 'recover_arrival', at: 38.2, gainDb: -10 },
   // seal clicks are generated from holes[].sealsAt — see lib/sfx.ts
   { id: 'final', file: 'final_seal', at: finalSealAt, gainDb: -6 },

@@ -19,7 +19,8 @@ export const Plate: React.FC<{ shot: Shot }> = ({ shot }) => {
     <AbsoluteFill>
       <OffthreadVideo
         src={staticFile(src)}
-        volume={(fr) => dbToGain(film.audio.mix.plateAudioDb) * sfxBusGainAt(shot.start + fr / 24) / dbToGain(film.audio.mix.sfxMasterDb)}
+        muted={film.audio.mix.plateAudioDb === null}
+        volume={(fr) => film.audio.mix.plateAudioDb === null ? 0 : dbToGain(film.audio.mix.plateAudioDb) * sfxBusGainAt(shot.start + fr / 24) / dbToGain(film.audio.mix.sfxMasterDb)}
         style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: `${fx * 100}% ${fy * 100}%` }}
       />
     </AbsoluteFill>

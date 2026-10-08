@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-08T08:18:41.542Z",
+  "generatedAt": "2026-10-08T08:56:38.131Z",
   "plates": {
     "S01": "plates/S01.mp4",
     "S02": "plates/S02.mp4",
@@ -21,35 +21,35 @@
   "vo": {
     "VO_01_OPENING": {
       "file": "audio/vo/VO_01_OPENING.mp3",
-      "duration": 1.201633
+      "duration": 1.253878
     },
     "VO_02_LEAKAGE": {
       "file": "audio/vo/VO_02_LEAKAGE.mp3",
-      "duration": 6.791837
+      "duration": 5.668571
     },
     "VO_03_SCALE": {
       "file": "audio/vo/VO_03_SCALE.mp3",
-      "duration": 4.545306
+      "duration": 2.977959
     },
     "VO_03B_HIDDEN": {
       "file": "audio/vo/VO_03B_HIDDEN.mp3",
-      "duration": 2.507755
+      "duration": 3.108571
     },
     "VO_04_RECOVER": {
       "file": "audio/vo/VO_04_RECOVER.mp3",
-      "duration": 8.228571
+      "duration": 8.385306
     },
     "VO_05A_BRAND": {
       "file": "audio/vo/VO_05A_BRAND.mp3",
-      "duration": 1.097143
+      "duration": 1.07102
     },
     "VO_05B_LINE": {
       "file": "audio/vo/VO_05B_LINE.mp3",
-      "duration": 3.056327
+      "duration": 3.108571
     },
     "VO_05C_CTA": {
       "file": "audio/vo/VO_05C_CTA.mp3",
-      "duration": 1.671837
+      "duration": 1.724082
     }
   },
   "music": {
@@ -57,6 +57,14 @@
     "duration": 60.024
   },
   "sfx": {
+    "coin_escape_floor": {
+      "file": "audio/sfx/coin_escape_floor.mp3",
+      "duration": 1.044898
+    },
+    "recover_arrival": {
+      "file": "audio/sfx/recover_arrival.mp3",
+      "duration": 1.044898
+    },
     "seal_click": {
       "file": "audio/sfx/seal_click.mp3",
       "duration": 2.037551
@@ -64,6 +72,10 @@
     "final_seal": {
       "file": "audio/sfx/final_seal.mp3",
       "duration": 1.044898
+    },
+    "coins_inflow_bed": {
+      "file": "audio/sfx/coins_inflow_bed.mp3",
+      "duration": 28.029388
     },
     "sting_shimmer": {
       "file": "audio/sfx/sting_shimmer.mp3",

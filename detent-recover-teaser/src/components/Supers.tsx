@@ -37,7 +37,7 @@ export const Supers: React.FC = () => {
               transform: `translateY(calc(-50% + ${rise * u}px))`, opacity: o, filter: `blur(${blur * u}px)`,
               fontFamily: fonts.sans, fontWeight: sp.style === 'question' ? 500 : 300, fontSize: size,
               lineHeight: 1.25, letterSpacing: `${0.14 * size}px`, color: colours.paper, textAlign: L.align,
-              textShadow: `0 0 ${24 * u}px rgba(0,0,0,0.6)`,
+              textShadow: `0 0 ${24 * u}px rgba(0,0,0,0.6)`, whiteSpace: 'pre-line',
             }}
           >
             {sp.text}
