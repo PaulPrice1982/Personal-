@@ -46,7 +46,7 @@ export const brand = {
   parentName: 'DETENT',
   /** SVG/PNG under public/brand/. null = typographic placeholder wordmark. */
   detentLogo: null as string | null,
-  recoverLogo: null as string | null,
+  recoverLogo: 'brand/detent-recover-logo.png' as string | null,
   /** Placeholder fonts (OFL) bundled locally. Swap for Detent brand font files in public/brand/fonts. */
   font: {
     family: 'Detent Sans',
@@ -57,13 +57,18 @@ export const brand = {
     files: { '400': 'brand/fonts/ibm-plex-mono-latin-400-normal.woff2', '500': 'brand/fonts/ibm-plex-mono-latin-500-normal.woff2' } as Record<string, string>,
   },
   colours: {
-    ink: '#050607',
-    paper: '#E9ECEF',
-    muted: '#8B939C',
-    leak: '#D9A441', // restrained amber — "value escaping"
-    sealed: '#BFE3F2', // cool precision white-blue — Detent Recover
-    accent: '#6FC3E8', // illuminated detailing on the band
+    // Detent brand (sampled from the supplied Detent Recover logo)
+    ink: '#0D1116', // brand ink
+    slate: '#5C6572', // brand slate ("Recover")
+    gold: '#CE8B20', // brand gold (logo dot)
+    paper: '#F3F4F6', // light text on footage / end-card ground
+    muted: '#8F98A3', // slate lifted for legibility on dark footage
+    leak: '#B7BEC7', // leaking state: neutral, deliberately un-branded
+    sealed: '#CE8B20', // sealed state: brand gold
+    accent: '#CE8B20', // hairlines and highlights: brand gold
   },
+  /** End card ground. 'light' shows the supplied logo exactly as designed (dark ink on light). */
+  endCardTheme: 'light' as 'light' | 'dark',
   websiteUrl: '{{WEBSITE_URL}}',
   registrationUrl: '{{REGISTRATION_URL}}', // e.g. detent.ai/recover — NOT invented; supply it
   cta: 'REGISTER YOUR INTEREST',
