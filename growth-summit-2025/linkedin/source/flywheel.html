@@ -51,7 +51,7 @@ function arc(r0, r1, a0, a1) {
 }
 // Spin: fast on build, settles to a slow drift
 // One full revolution while the wheel builds, settling square by 5.5s
-const rot = t => 360 * out(t / 5.5);
+const rot = t => 360 * out(t / 3.8);
 
 function render(t) {
   // Background bloom drifts slowly
@@ -60,10 +60,13 @@ function render(t) {
     `radial-gradient(900px 900px at ${bx}% ${by}%, rgba(169,188,151,.20), transparent 70%),
      radial-gradient(800px 800px at 8% 100%, rgba(86,96,78,.35), transparent 70%), linear-gradient(160deg, #16261D, #1F3529)`;
 
-  const fault = ease((t - 6.6) / 1.2);           // missing / weak segments reveal
-  const wobble = fault * (1 - ease((t - 18.2) / .8));
-  const endP = ease((t - 18.2) / 1.0);            // end card
-  const rimP = ease((t - 14.4) / 1.6);            // contract value rim
+  // Beats are timed to the narration (VO starts at 0.6s)
+  const missF = ease((t - 7.9) / .9);            // "Some parts are missing altogether"
+  const weakF = ease((t - 9.9) / .9);            // "Others exist in name only"
+  const pulse = Math.sin(clamp((t - 3.4) / 1.4) * Math.PI); // "It wobbles"
+  const wobble = Math.max(missF, pulse) * (1 - ease((t - 24.0) / .8));
+  const endP = ease((t - 24.0) / 1.0);            // end card
+  const rimP = ease((t - 19.6) / 1.4);            // "Contract value" 
   const ox = wobble * 9 * Math.sin(t * 2 * Math.PI * 1.3), oy = wobble * 6 * Math.cos(t * 2 * Math.PI * 1.3);
   const r = rot(t) + wobble * 2.2 * Math.sin(t * 2 * Math.PI * 2.6);
   const scale = 1 - .45 * endP, lift = -260 * endP;
@@ -73,20 +76,20 @@ function render(t) {
   g += `<circle cx="${CX}" cy="${CY + 14}" r="${R2 + 6}" fill="#0b140f" opacity="${.45 * out((t - .8) / 1)}" filter="url(#blur)"/>`;
   // Inner function ring
   FUNCS.forEach((f, fi) => {
-    const p = ease((t - .8 - fi * .25) / 1.0), a0 = fi * 8 * STEP, a1 = a0 + 8 * STEP * p;
+    const p = ease((t - .5 - fi * .2) / .8), a0 = fi * 8 * STEP, a1 = a0 + 8 * STEP * p;
     if (p > 0) g += `<path d="${arc(R0, R1, a0, a1)}" fill="${f.fill}" stroke="${PINE}" stroke-width="4"/>`;
     const mid = a0 + 4 * STEP, [lx, ly] = pt((R0 + R1) / 2, mid);
     const am = ((mid + r) % 360 + 360) % 360, ra = am > 90 && am < 270 ? mid + 180 : mid;
-    g += `<text x="${lx}" y="${ly}" transform="rotate(${ra} ${lx} ${ly})" text-anchor="middle" dominant-baseline="central" font-family="Figtree" font-weight="700" font-size="${fi === 1 ? 17 : 19}" letter-spacing="2.5" fill="${PINE}" opacity="${clamp((t - 2) / .5)}">${f.name}</text>`;
+    g += `<text x="${lx}" y="${ly}" transform="rotate(${ra} ${lx} ${ly})" text-anchor="middle" dominant-baseline="central" font-family="Figtree" font-weight="700" font-size="${fi === 1 ? 17 : 19}" letter-spacing="2.5" fill="${PINE}" opacity="${clamp((t - 1.4) / .5)}">${f.name}</text>`;
   });
   // Outer segments
   SEGS.forEach((s, i) => {
-    const p = out((t - 2.0 - i * .12) / .4); if (p <= 0) return;
+    const p = out((t - 1.1 - i * .1) / .35); if (p <= 0) return;
     const a0 = i * STEP, a1 = a0 + STEP, mid = a0 + STEP / 2;
     const ro = R1 + (R2 - R1) * (.85 + .15 * p);
-    const miss = MISSING.has(s.label) ? fault : 0, weak = WEAK.has(s.label) ? fault : 0;
+    const miss = MISSING.has(s.label) ? missF : 0, weak = WEAK.has(s.label) ? weakF : 0;
     // Scan highlight in the "which are yours" beat
-    const k = Math.floor((t - 10.2) * 7) % N, scan = t > 10.2 && t < 14.2 && k === i ? 1 : 0;
+    const k = Math.floor((t - 12.2) * 7) % N, scan = t > 12.2 && t < 16.6 && k === i ? 1 : 0;
     const fillOp = p * (1 - miss) * (1 - .7 * weak);
     g += `<path d="${arc(R1, ro, a0, a1)}" fill="${s.fill}" fill-opacity="${fillOp}" stroke="${PINE}" stroke-width="4"/>`;
     if (miss > 0) g += `<path d="${arc(R1 + 6, R2 - 6, a0 + .9, a1 - .9)}" fill="none" stroke="${IVORY}" stroke-opacity="${.75 * miss}" stroke-width="2.5" stroke-dasharray="9 8"/>`;
@@ -101,7 +104,7 @@ function render(t) {
   if (rimP > 0) {
     const circ = 2 * Math.PI * ((B0 + B1) / 2);
     g += `<circle cx="${CX}" cy="${CY}" r="${(B0 + B1) / 2}" fill="none" stroke="${IVORY}" stroke-width="${B1 - B0}" stroke-dasharray="${circ * rimP} ${circ}" transform="rotate(-90 ${CX} ${CY})"/>`;
-    g += `<text font-family="Figtree" font-weight="700" font-size="19" letter-spacing="3.2" fill="${PINE}" opacity="${clamp((t - 15.4) / .8)}"><textPath href="#rimPath">CONTRACT VALUE · USAGE AHEAD OF BILLING · RENEWALS LEFT FLAT · PRICING BEHIND VALUE ·</textPath></text>`;
+    g += `<text font-family="Figtree" font-weight="700" font-size="19" letter-spacing="3.2" fill="${PINE}" opacity="${clamp((t - 20.6) / .8)}"><textPath href="#rimPath">CONTRACT VALUE · USAGE AHEAD OF BILLING · RENEWALS LEFT FLAT · PRICING BEHIND VALUE ·</textPath></text>`;
   }
   // Hub
   g += `<circle cx="${CX}" cy="${CY}" r="${R0 - 4}" fill="${PINE}" stroke="${IVORY}" stroke-opacity=".25" stroke-width="2"/>`;
@@ -121,10 +124,11 @@ function render(t) {
 
   // Headline beats
   const beats = [
-    [0, 6.4, 'The RevOps flywheel', 'A flywheel with missing parts doesn’t spin. <em>It wobbles.</em>', ''],
-    [6.4, 10.2, 'The RevOps flywheel', 'Most revenue teams run with gaps <em>they have stopped seeing.</em>', 'legend'],
-    [10.2, 14.4, 'Your turn', 'Which are missing in yours? <em>Which exist only on paper?</em>', 'legend'],
-    [14.4, 18.4, 'The segment nobody draws', 'Contract value: revenue <em>already earned, never billed.</em>', ''],
+    [0, 4.9, 'The RevOps flywheel', 'A flywheel with missing parts doesn’t spin. <em>It wobbles.</em>', ''],
+    [4.7, 12.1, 'The RevOps flywheel', 'Most revenue teams run with gaps <em>they have stopped seeing.</em>', 'legend'],
+    [11.9, 17.1, 'Your turn', 'Which are missing in yours? <em>Which exist only on paper?</em>', 'legend'],
+    [16.9, 19.8, 'The segment nobody draws', 'And one segment <em>almost nobody draws.</em>', ''],
+    [19.6, 24.2, 'The segment nobody draws', 'Contract value: revenue <em>already earned, never billed.</em>', ''],
   ];
   let html = '';
   for (const [a, b, eb, h, extra] of beats) {
@@ -133,16 +137,16 @@ function render(t) {
     const dy = (1 - o) * 14;
     html += `<div style="position:absolute;inset:0;opacity:${o};transform:translateY(${dy}px)">
       <div class="eyebrow">${eb.toUpperCase()}</div><div class="h1">${h}</div>
-      ${extra ? `<div class="legend"><span><i class="chip" style="border:2.5px dashed #F4F2EC"></i>Missing</span>
-        <span><i class="chip" style="background:repeating-linear-gradient(45deg,#2b3d31 0 5px,#7f9070 5px 9px)"></i>In name only</span></div>` : ''}
+      ${extra ? `<div class="legend"><span style="opacity:${clamp((t - 7.9) / .5)}"><i class="chip" style="border:2.5px dashed #F4F2EC"></i>Missing</span>
+        <span style="opacity:${clamp((t - 9.9) / .5)}"><i class="chip" style="background:repeating-linear-gradient(45deg,#2b3d31 0 5px,#7f9070 5px 9px)"></i>In name only</span></div>` : ''}
     </div>`;
   }
   document.getElementById('head').innerHTML = html;
-  const e = ease((t - 18.8) / .8);
+  const e = ease((t - 24.2) / .8);
   document.getElementById('end').innerHTML = `<div style="opacity:${e};transform:translateY(${(1 - e) * 16}px)">
     <div class="h1">Which segment would you<br><em>fix first?</em></div>
     <div class="sub">Tell me in the comments.</div></div>`;
-  const l = ease((t - 19.6) / .8);
+  const l = ease((t - 25.6) / .8);
   document.getElementById('logo').style.opacity = l;
   document.getElementById('url').style.opacity = l;
 }

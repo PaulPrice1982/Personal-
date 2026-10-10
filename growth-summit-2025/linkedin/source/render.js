@@ -3,7 +3,7 @@
 const { chromium } = require('playwright');
 const { spawn } = require('child_process');
 const path = require('path');
-const FPS = 30, DURATION = 22;
+const FPS = 30, DURATION = 29;
 (async () => {
   const out = process.argv[2];
   const stillsArg = process.argv.indexOf('--stills');
