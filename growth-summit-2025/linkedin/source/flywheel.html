@@ -1,0 +1,152 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face { font-family: 'Bodoni Moda'; src: url('../fonts/BodoniModa.ttf'); font-style: normal; font-weight: 400 900; }
+@font-face { font-family: 'Bodoni Moda'; src: url('../fonts/BodoniModa-Italic.ttf'); font-style: italic; font-weight: 400 900; }
+@font-face { font-family: 'Figtree'; src: url('../fonts/Figtree.ttf'); }
+:root { --pine:#16261D; --ivory:#F4F2EC; --sage:#A9BC97; --second:#C9D3C0; }
+html, body { margin: 0; width: 1080px; height: 1350px; overflow: hidden; background: var(--pine); }
+#bg { position: absolute; inset: 0; }
+svg { position: absolute; inset: 0; }
+.head { position: absolute; left: 96px; right: 96px; top: 112px; }
+.eyebrow { font: 600 22px/1 'Figtree'; letter-spacing: .22em; color: var(--second); margin-bottom: 26px; }
+.h1 { font: 400 60px/1.12 'Bodoni Moda'; color: var(--ivory); letter-spacing: 0; font-variation-settings: 'opsz' 28; font-kerning: normal; }
+.h1 em { color: var(--sage); }
+.legend { display: flex; gap: 40px; margin-top: 28px; font: 500 26px/1 'Figtree'; color: var(--second); }
+.chip { display: inline-block; width: 30px; height: 22px; border-radius: 5px; vertical-align: -4px; margin-right: 12px; }
+.end { position: absolute; left: 96px; right: 96px; top: 360px; text-align: center; }
+.end .h1 { font-size: 64px; }
+.end .sub { font: 500 30px/1.4 'Figtree'; color: var(--second); margin-top: 30px; }
+.logo { position: absolute; left: 50%; top: 860px; transform: translateX(-50%); width: 380px; }
+.url { position: absolute; left: 0; right: 0; top: 1075px; text-align: center; font: 500 28px/1 'Figtree'; letter-spacing: .04em; color: var(--second); }
+</style></head>
+<body>
+<div id="bg"></div>
+<svg id="wheel" width="1080" height="1350" viewBox="0 0 1080 1350"></svg>
+<div class="head" id="head"></div>
+<div class="end" id="end"></div>
+<img class="logo" id="logo" src="../logo/lockup_rev.png">
+<div class="url" id="url">www.veridian-partners.com</div>
+<script>
+const FUNCS = [
+  { name: 'SALES', fill: '#A9BC97', items: ['Prospecting', 'Pipeline', 'Deal desk', 'Pricing', 'Forecasting', 'Territories', 'Enablement', 'Win/loss'] },
+  { name: 'CUSTOMER SUCCESS', fill: '#C9D3C0', items: ['Onboarding', 'Adoption', 'Health scores', 'Renewals', 'Expansion', 'QBRs', 'Support', 'Advocacy'] },
+  { name: 'MARKETING', fill: '#7E8C70', items: ['Lead gen', 'Segmentation', 'Content', 'Events', 'Attribution', 'Brand', 'Market intel', 'Budget & ROI'] },
+];
+const SEGS = FUNCS.flatMap((f, fi) => f.items.map((label, j) => ({ label, fill: f.fill, fi, j })));
+const MISSING = new Set(['Deal desk', 'Expansion', 'Attribution']);
+const WEAK = new Set(['Forecasting', 'Health scores', 'Market intel', 'Enablement']);
+const N = SEGS.length, STEP = 360 / N;
+const CX = 540, CY = 770, R0 = 112, R1 = 192, R2 = 388, B0 = 398, B1 = 440;
+const PINE = '#16261D', IVORY = '#F4F2EC';
+
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const ease = x => { x = clamp(x); return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
+const out = x => 1 - Math.pow(1 - clamp(x), 3);
+const win = (t, a, b, f = .5) => Math.min(ease((t - a) / f), 1 - ease((t - b + f) / f)); // fade in at a, out by b
+const pt = (r, a) => [CX + r * Math.sin(a * Math.PI / 180), CY - r * Math.cos(a * Math.PI / 180)];
+function arc(r0, r1, a0, a1) {
+  const large = a1 - a0 > 180 ? 1 : 0, [x0, y0] = pt(r1, a0), [x1, y1] = pt(r1, a1), [x2, y2] = pt(r0, a1), [x3, y3] = pt(r0, a0);
+  return `M${x0},${y0} A${r1},${r1} 0 ${large} 1 ${x1},${y1} L${x2},${y2} A${r0},${r0} 0 ${large} 0 ${x3},${y3} Z`;
+}
+// Spin: fast on build, settles to a slow drift
+// One full revolution while the wheel builds, settling square by 5.5s
+const rot = t => 360 * out(t / 5.5);
+
+function render(t) {
+  // Background bloom drifts slowly
+  const bx = 78 + 6 * Math.sin(t / 4), by = 18 + 4 * Math.cos(t / 5);
+  document.getElementById('bg').style.background =
+    `radial-gradient(900px 900px at ${bx}% ${by}%, rgba(169,188,151,.20), transparent 70%),
+     radial-gradient(800px 800px at 8% 100%, rgba(86,96,78,.35), transparent 70%), linear-gradient(160deg, #16261D, #1F3529)`;
+
+  const fault = ease((t - 6.6) / 1.2);           // missing / weak segments reveal
+  const wobble = fault * (1 - ease((t - 18.2) / .8));
+  const endP = ease((t - 18.2) / 1.0);            // end card
+  const rimP = ease((t - 14.4) / 1.6);            // contract value rim
+  const ox = wobble * 9 * Math.sin(t * 2 * Math.PI * 1.3), oy = wobble * 6 * Math.cos(t * 2 * Math.PI * 1.3);
+  const r = rot(t) + wobble * 2.2 * Math.sin(t * 2 * Math.PI * 2.6);
+  const scale = 1 - .45 * endP, lift = -260 * endP;
+
+  let g = '';
+  // Soft shadow disc
+  g += `<circle cx="${CX}" cy="${CY + 14}" r="${R2 + 6}" fill="#0b140f" opacity="${.45 * out((t - .8) / 1)}" filter="url(#blur)"/>`;
+  // Inner function ring
+  FUNCS.forEach((f, fi) => {
+    const p = ease((t - .8 - fi * .25) / 1.0), a0 = fi * 8 * STEP, a1 = a0 + 8 * STEP * p;
+    if (p > 0) g += `<path d="${arc(R0, R1, a0, a1)}" fill="${f.fill}" stroke="${PINE}" stroke-width="4"/>`;
+    const mid = a0 + 4 * STEP, [lx, ly] = pt((R0 + R1) / 2, mid);
+    const am = ((mid + r) % 360 + 360) % 360, ra = am > 90 && am < 270 ? mid + 180 : mid;
+    g += `<text x="${lx}" y="${ly}" transform="rotate(${ra} ${lx} ${ly})" text-anchor="middle" dominant-baseline="central" font-family="Figtree" font-weight="700" font-size="${fi === 1 ? 17 : 19}" letter-spacing="2.5" fill="${PINE}" opacity="${clamp((t - 2) / .5)}">${f.name}</text>`;
+  });
+  // Outer segments
+  SEGS.forEach((s, i) => {
+    const p = out((t - 2.0 - i * .12) / .4); if (p <= 0) return;
+    const a0 = i * STEP, a1 = a0 + STEP, mid = a0 + STEP / 2;
+    const ro = R1 + (R2 - R1) * (.85 + .15 * p);
+    const miss = MISSING.has(s.label) ? fault : 0, weak = WEAK.has(s.label) ? fault : 0;
+    // Scan highlight in the "which are yours" beat
+    const k = Math.floor((t - 10.2) * 7) % N, scan = t > 10.2 && t < 14.2 && k === i ? 1 : 0;
+    const fillOp = p * (1 - miss) * (1 - .7 * weak);
+    g += `<path d="${arc(R1, ro, a0, a1)}" fill="${s.fill}" fill-opacity="${fillOp}" stroke="${PINE}" stroke-width="4"/>`;
+    if (miss > 0) g += `<path d="${arc(R1 + 6, R2 - 6, a0 + .9, a1 - .9)}" fill="none" stroke="${IVORY}" stroke-opacity="${.75 * miss}" stroke-width="2.5" stroke-dasharray="9 8"/>`;
+    if (weak > 0) g += `<path d="${arc(R1, R2, a0, a1)}" fill="url(#hatch)" opacity="${weak * .9}" stroke="${PINE}" stroke-width="4"/>`;
+    if (scan) g += `<path d="${arc(R1 - 2, R2 + 8, a0, a1)}" fill="none" stroke="${IVORY}" stroke-width="5"/>`;
+    const [lx, ly] = pt((R1 + R2) / 2 + 6, mid), am = ((mid + r) % 360 + 360) % 360, ra = am < 180 ? mid - 90 : mid + 90;
+    const labCol = weak > .5 ? IVORY : PINE, labOp = p * (1 - miss) * (1 - .35 * weak);
+    g += `<text x="${lx}" y="${ly}" transform="rotate(${ra} ${lx} ${ly})" text-anchor="middle" dominant-baseline="central" font-family="Figtree" font-weight="600" font-size="27" fill="${labCol}" opacity="${labOp}">${s.label.replace('&', '&amp;')}</text>`;
+    if (miss > 0) g += `<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="central" font-family="Bodoni Moda" font-size="64" fill="${IVORY}" opacity="${miss}" transform="rotate(${-r} ${lx} ${ly})">?</text>`;
+  });
+  // Contract value rim
+  if (rimP > 0) {
+    const circ = 2 * Math.PI * ((B0 + B1) / 2);
+    g += `<circle cx="${CX}" cy="${CY}" r="${(B0 + B1) / 2}" fill="none" stroke="${IVORY}" stroke-width="${B1 - B0}" stroke-dasharray="${circ * rimP} ${circ}" transform="rotate(-90 ${CX} ${CY})"/>`;
+    g += `<text font-family="Figtree" font-weight="700" font-size="19" letter-spacing="3.2" fill="${PINE}" opacity="${clamp((t - 15.4) / .8)}"><textPath href="#rimPath">CONTRACT VALUE · USAGE AHEAD OF BILLING · RENEWALS LEFT FLAT · PRICING BEHIND VALUE ·</textPath></text>`;
+  }
+  // Hub
+  g += `<circle cx="${CX}" cy="${CY}" r="${R0 - 4}" fill="${PINE}" stroke="${IVORY}" stroke-opacity=".25" stroke-width="2"/>`;
+  g += `<text x="${CX}" y="${CY}" text-anchor="middle" dominant-baseline="central" font-family="Bodoni Moda" font-size="40" fill="${IVORY}" transform="rotate(${-r} ${CX} ${CY})">RevOps</text>`;
+
+  const rp = (B0 + B1) / 2;
+  document.getElementById('wheel').innerHTML = `
+    <defs>
+      <filter id="blur" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="18"/></filter>
+      <pattern id="hatch" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+        <rect width="14" height="14" fill="#2b3d31"/><line x1="0" y1="0" x2="0" y2="14" stroke="#A9BC97" stroke-opacity=".55" stroke-width="5"/></pattern>
+      <path id="rimPath" d="M${CX},${CY - rp + 6} A${rp - 6},${rp - 6} 0 1 1 ${CX - .1},${CY - rp + 6}"/>
+    </defs>
+    <g opacity="${1 - endP}" transform="translate(${CX + ox} ${CY + oy + lift}) scale(${scale}) translate(${-CX} ${-CY})">
+      <g transform="rotate(${r} ${CX} ${CY})">${g}</g>
+    </g>`;
+
+  // Headline beats
+  const beats = [
+    [0, 6.4, 'The RevOps flywheel', 'A flywheel with missing parts doesn’t spin. <em>It wobbles.</em>', ''],
+    [6.4, 10.2, 'The RevOps flywheel', 'Most revenue teams run with gaps <em>they have stopped seeing.</em>', 'legend'],
+    [10.2, 14.4, 'Your turn', 'Which are missing in yours? <em>Which exist only on paper?</em>', 'legend'],
+    [14.4, 18.4, 'The segment nobody draws', 'Contract value: revenue <em>already earned, never billed.</em>', ''],
+  ];
+  let html = '';
+  for (const [a, b, eb, h, extra] of beats) {
+    const o = a === 0 ? (t < b - .5 ? 1 : 1 - ease((t - b + .5) / .5)) : win(t, a, b);
+    if (o <= 0) continue;
+    const dy = (1 - o) * 14;
+    html += `<div style="position:absolute;inset:0;opacity:${o};transform:translateY(${dy}px)">
+      <div class="eyebrow">${eb.toUpperCase()}</div><div class="h1">${h}</div>
+      ${extra ? `<div class="legend"><span><i class="chip" style="border:2.5px dashed #F4F2EC"></i>Missing</span>
+        <span><i class="chip" style="background:repeating-linear-gradient(45deg,#2b3d31 0 5px,#7f9070 5px 9px)"></i>In name only</span></div>` : ''}
+    </div>`;
+  }
+  document.getElementById('head').innerHTML = html;
+  const e = ease((t - 18.8) / .8);
+  document.getElementById('end').innerHTML = `<div style="opacity:${e};transform:translateY(${(1 - e) * 16}px)">
+    <div class="h1">Which segment would you<br><em>fix first?</em></div>
+    <div class="sub">Tell me in the comments.</div></div>`;
+  const l = ease((t - 19.6) / .8);
+  document.getElementById('logo').style.opacity = l;
+  document.getElementById('url').style.opacity = l;
+}
+window.render = render;
+render(0);
+</script>
+</body></html>
